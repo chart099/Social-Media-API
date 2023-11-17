@@ -6,7 +6,7 @@ module.exports = {
         try{
             const users = await User.find();
             res.json(users);
-        }catch {
+        }catch (err){
             res.status(500).json(err);
         }
     },
@@ -55,7 +55,7 @@ module.exports = {
             }
             res.json(user)
         } catch (err) {
-            
+            res.status(500).json(err);
         } 
     },
     async addFriend(req,res) {

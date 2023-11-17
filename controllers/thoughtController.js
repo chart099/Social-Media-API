@@ -4,7 +4,7 @@ module.exports = {
     async getThoughts(req, res) {
         try {
             const thought = await Thought.find();
-            res.json(this.getThought);
+            res.json(thought);
         }catch(err){
             res.status(500).json(err);
         }
@@ -36,7 +36,7 @@ module.exports = {
                     message: 'Thought created although there is no user with that ID'
                 });
             }
-            res.json("Thought created")
+            res.json(user)
         } catch (err){
             console.log(err);
             res.status(500).json(err);
@@ -65,7 +65,7 @@ module.exports = {
             if (!thought) {
                 return res.status(404).json({message: 'No thought found'})
             }
-             const user = await Thought.findOneAndUpdate(
+             const user = await User.findOneAndUpdate(
                 {thoughts: req.params.thoughtId},
                 {$pull: {thoughts: req.params.thoughtId}},
                 {new: true}
@@ -83,7 +83,6 @@ module.exports = {
                 {$addToSet: {reactions: req.body}},
                 {runValidators: true, new: true}
             );
-
             if (!thought) {
                 return res.status(404).json({message: 'No thought found'});
             }
@@ -97,7 +96,7 @@ module.exports = {
         try {
             const thought = await Thought.findOneAndUpdate(
                 {_id: req.params.thoughtId},
-                {$pull: {reactions: {reactionId: reqparams.reactionId}}},
+                {$pull: {reactions: {reactionId: req.params.reactionId}}},
                 {runValidators: true, new: true}
             )
 
