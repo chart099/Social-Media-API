@@ -104,7 +104,7 @@ module.exports = {
                 return res.status(404).json({message: 'No thought with this id!'})
             }
 
-            res.json(video);
+            res.json(thought);
         } catch (err) {
             res.status(500).json(err);
         }
